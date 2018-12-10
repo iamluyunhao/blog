@@ -1,0 +1,127 @@
+{% extends 'web/base.html' %}
+
+{% block title %}
+    首页_JackHao个人博客
+{% endblock %}
+
+{% block meta %}
+    <meta name="keywords" content="JackHao个人博客" />
+    <meta name="description" content="JackHao个人博客，是一个站在Djangp设计之路的程序员个人网站" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% endblock %}
+
+{% block css %}
+    {% load static %}
+        <link href="{% static 'web/css/base.css' %}" rel="stylesheet">
+        <link href="{% static 'web/css/index.css' %}" rel="stylesheet">
+        <link href="{% static 'web/css/m.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block js %}
+    {% load static %}
+        <script src="{% static 'web/js/jquery.min.js' %}" type="text/javascript"></script>
+        <script type="text/javascript" src="{% static  'web/js/comm.js' %}"></script>
+        <!--[if lt IE 9]>
+        <script src="{% static  'web/js/modernizr.js' %}"></script>
+        <![endif]-->
+{% endblock %}
+
+{% block content_head %}
+    <header class="header-navigation" id="header">
+      <nav><div class="logo"><a href="/">JackHao个人博客</a></div>
+        <h2 id="mnavh"><span class="navicon"></span></h2>
+        <ul id="starlist">
+          <li><a href="{% url 'web:index' %}">网站首页</a></li>
+          <li><a href="{% url 'web:list' %}">我的文章</a></li>
+          <li><a href="{% url 'web:about' %}">关于我</a></li>
+        </ul>
+      </nav>
+    </header>
+{% endblock %}
+
+{% block content_body %}
+    <article>
+      <aside class="l_box">
+          <div class="about_me">
+            <h2>关于我</h2>
+            <ul>
+              <i><img src="/static/web/images/touxiang.jpg"></i>
+              <p><b>JackHao</b></b>，一个90后站长！15年入行。潜心研究Python，一边学习一边积累经验，分享一些个人学习经验与开发技术。</p>
+            </ul>
+          </div>
+          <div class="search">
+            <form action="/e/search/index.php" method="post" name="searchform" id="searchform">
+              <input name="keyboard" id="keyboard" class="input_text" value="请输入关键字词" style="color: rgb(153, 153, 153);" onfocus="if(value=='请输入关键字词'){this.style.color='#000';value=''}" onblur="if(value==''){this.style.color='#999';value='请输入关键字词'}" type="text">
+              <input name="show" value="title" type="hidden">
+              <input name="tempid" value="1" type="hidden">
+              <input name="tbname" value="news" type="hidden">
+              <input name="Submit" class="input_submit" value="搜索" type="submit">
+             {# <div id="content"></div>#}
+            </form>
+          </div>
+          <div class="fenlei">
+            <h2>文章分类</h2>
+              <ul>
+                  {% for foo in category %}
+                    <li><a href="{% url 'web:category_list' foo.id %}">{{ foo.name }}</a></li>
+                  {% endfor %}
+              </ul>
+          </div>
+          <div class="links">
+            <h2>友情链接</h2>
+            <ul>
+              <a href="{% url 'web:index' %}">JackHao个人博客</a> <a href="{% url 'web:index' %}">JackHao博客</a>
+            </ul>
+          </div>
+          <div class="guanzhu">
+            <h2>关注我 么么哒</h2>
+            <ul>
+              <img src="/static/web/images/wx.jpg">
+            </ul>
+          </div>
+      </aside>
+      <main class="r_box">
+          {% for art in page %}
+                <li><i><a href="{% url 'web:info' art.id %}"><img src="/media/{{ art.icon }}"></a></i>
+                  <h3><a href="{% url 'web:info' art.id %}">{{ art.title }}</a></h3>
+                  <p>{{ art.desc }}</p>
+                </li>
+          {% endfor %}
+      </main>
+    </article>
+
+{# 搜索框 #}
+{#<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>#}
+{#<script>#}
+{#     $('#keyboard').bind('input propertychange', function () {#}
+{#            var keyword = $('#keyboard').val();#}
+{#            if (keyword){#}
+{#              $.ajax({#}
+{#                url: '/web/art/?keyword='+ keyword,#}
+{#                type: 'GET',#}
+{#                dataType: 'json',#}
+{#                success: function (data) {#}
+{#                    $('#content').empty()#}
+{#                    for(var i=0; i<data.length; i++){#}
+{#                         s = '<p>' + data[i].title#}
+{#                        $('#content').append(s)#}
+{#                    }#}
+{#                },#}
+{#                error: function (data) {#}
+{#                    window.alert('获取失败')#}
+{#                }#}
+{#            })#}
+{#        } else{#}
+{#                 $('#content').empty()#}
+{#            }#}
+{#     })#}
+{#</script>#}
+
+{% endblock %}
+
+{% block content_foot %}
+    <footer>
+      <p>Design by <a href="{% url 'web:index' %}" target="_blank">JackHao个人博客</a></p>
+    </footer>
+    <a href="#" class="cd-top">Top</a>
+{% endblock %}

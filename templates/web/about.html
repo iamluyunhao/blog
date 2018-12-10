@@ -1,0 +1,107 @@
+{% extends 'web/base.html' %}
+
+{% block title %}
+    关于我_JackHao个人博客
+{% endblock %}
+
+{% block meta %}
+    <meta name="keywords" content="JackHao个人博客" />
+    <meta name="description" content="JackHao个人博客，是一个站在Python设计之路的程序员个人网站" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% endblock %}
+
+{% block css %}
+    {% load static %}
+        <link href="{% static 'web/css/base.css' %}" rel="stylesheet">
+        <link href="{% static 'web/css/index.css' %}" rel="stylesheet">
+        <link href="{% static 'web/css/m.css' %}" rel="stylesheet">
+{% endblock %}
+
+
+{% block js %}
+        <script src="{% static 'web/js/jquery.min.js' %}" type="text/javascript"></script>
+        <script type="text/javascript" src="{% static  'web/js/comm.js' %}"></script>
+        <script type="text/javascript" src="{% static 'web/js/hc-sticky.js' %}"></script>
+        <!--[if lt IE 9]>
+        <script src="{% static  'web/js/modernizr.js' %}"></script>
+        <![endif]-->
+{% endblock %}
+
+{% block content_head %}
+    </head>
+    <body>
+    <header class="header-navigation" id="header">
+      <nav><div class="logo"><a href="/">JackHao个人博客</a></div>
+        <h2 id="mnavh"><span class="navicon"></span></h2>
+        <ul id="starlist">
+          <li><a href="{% url 'web:index' %}">网站首页</a></li>
+          <li><a href="{% url 'web:list' %}">我的文章</a></li>
+          <li><a href="{% url 'web:about' %}">关于我</a></li>
+        </ul>
+      </nav>
+    </header>
+{% endblock %}
+
+{% block content_body %}
+    <article>
+      <aside class="l_box">
+        <div class="about_me">
+          <h2>关于我</h2>
+           <ul>
+              <i><img src="/static/web/images/touxiang.jpg"></i>
+              <p><b>JackHao</b></b>，一个90后站长！15年入行。潜心研究Python，一边学习一边积累经验，分享一些个人学习经验与开发技术。</p>
+           </ul>
+        </div>
+        <div class="search">
+          <form action="/e/search/index.php" method="post" name="searchform" id="searchform">
+            <input name="keyboard" id="keyboard" class="input_text" value="请输入关键字词" style="color: rgb(153, 153, 153);" onfocus="if(value=='请输入关键字词'){this.style.color='#000';value=''}" onblur="if(value==''){this.style.color='#999';value='请输入关键字词'}" type="text">
+            <input name="show" value="title" type="hidden">
+            <input name="tempid" value="1" type="hidden">
+            <input name="tbname" value="news" type="hidden">
+            <input name="Submit" class="input_submit" value="搜索" type="submit">
+          </form>
+        </div>
+        <div class="fenlei">
+          <h2>文章分类</h2>
+          <ul>
+              {% for foo in category %}
+                <li><a href="{% url 'web:category_list' foo.id %}">{{ foo.name }}</a></li>
+              {% endfor %}
+          </ul>
+        </div>
+
+        <div class="guanzhu">
+          <h2>关注我 么么哒</h2>
+          <ul>
+            <img src="/static/web/images/wx.jpg">
+          </ul>
+        </div>
+      </aside>
+      <main class="r_box">
+         <div class="about">
+          <p>JackHao，一个90后站长！15年入行。一直潜心研究Python，一边学习一边积累经验，分享一些个人学习经验与开发技术。
+            <br />
+              <br />
+            好记性不如烂笔头，工作、学习和生活过程中的点点滴滴、关键知识点都需要记录，并不时拿出来阅读和总结，对过往知识的回顾和总结，为今后工作提供能量。
+              本博客主要记录工作中解决的技术难题、日常系统性复习过程中的相关笔记等。<br />
+            <img src="/static/web/images/tp5.jpg">
+            <br />
+                互联网行业技术更新太快，很多技术每天都需要接触，经常进行系统性的学习、复习与总结，能够从更高的角度对整个技术栈有更好的掌握。博客中涉及到的系统性知识包括：Python、数据结构与算法、数据挖掘、机器学习、深度学习、信息检索、个性化推荐、、大数据、数据库、量、系统架构等。<br />
+            <br />
+              盖以博伊人颦笑， 所作稍逊阳刚.望公等休怪. 吾素来甚少品赏俗乐 亦不愿心附当红之优伶.
+             虽知此违世风所行. 然执着之气终未有改. 呜呼，今之靡音皆流于世， 古之风雅多遗于土.而身怀才德者不得行其道， 此久为予所睹，恨也.
+             吾深知普雅之事难有其为， 故有仿效陶朱之意， 隐匿山水之心， 只惜居无西施同伴， 行乏子期相交. 终日茕茕孑立，形影相吊， 惟以小博赏心悦目，趣矣。
+            <br />
+              <br />
+             人生苦短，生命渺若尘埃. 我们在拥有了物质的同时， 也就拥有了心灵的歌声. 而吾所建之小博，非为其他，乃为品文、赏乐及交友所用.<br />
+         </div>
+      </main>
+    </article>
+{% endblock %}
+
+{% block content_foot %}
+<footer>
+  <p>Design by <a href="{% url 'web:index' %}" target="_blank">JackHao个人博客</a></p>
+</footer>
+<a href="#" class="cd-top">Top</a>
+{% endblock %}

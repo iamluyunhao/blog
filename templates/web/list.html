@@ -1,0 +1,130 @@
+{% extends 'web/base.html' %}
+
+{% block title %}
+    我的日记_JackHao个人博客
+{% endblock %}
+
+{% block meta %}
+    <meta name="keywords" content="个人博客,杨青个人博客,个人博客模板,杨青" />
+    <meta name="description" content="杨青个人博客，是一个站在web前端设计之路的女程序员个人网站，提供个人博客模板免费资源下载的个人原创网站。" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% endblock %}
+
+{% block css %}
+    {% load static %}
+        <link href="{% static 'web/css/base.css' %}" rel="stylesheet">
+        <link href="{% static 'web/css/index.css' %}" rel="stylesheet">
+        <link href="{% static 'web/css/m.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block js %}
+    {% load static %}
+        <script src="{% static 'web/js/jquery.min.js' %}" type="text/javascript"></script>
+        <script type="text/javascript" src="{% static 'web/js/hc-sticky.js' %}"></script>
+        <script type="text/javascript" src="{% static  'web/js/comm.js' %}"></script>
+        <!--[if lt IE 9]>
+        <script src="{% static  'web/js/modernizr.js' %}"></script>
+        <![endif]-->
+{% endblock %}
+
+
+{% block content_head %}
+    <header class="header-navigation" id="header">
+      <nav><div class="logo"><a href="/">JackHao个人博客</a></div>
+        <h2 id="mnavh"><span class="navicon"></span></h2>
+        <ul id="starlist">
+           <li><a href="{% url 'web:index' %}">网站首页</a></li>
+           <li><a href="{% url 'web:list' %}">我的文章</a></li>
+           <li><a href="{% url 'web:about' %}">关于我</a></li>
+        </ul>
+    </nav>
+    </header>
+{% endblock %}
+
+{% block content_body %}
+    <article>
+      <aside class="l_box">
+     <div class="search">
+          <form action="/e/search/index.php" method="post" name="searchform" id="searchform">
+            <input name="keyboard" id="keyboard" class="input_text" value="请输入关键字词" style="color: rgb(153, 153, 153);" onfocus="if(value=='请输入关键字词'){this.style.color='#000';value=''}" onblur="if(value==''){this.style.color='#999';value='请输入关键字词'}" type="text">
+            <input name="show" value="title" type="hidden">
+            <input name="tempid" value="1" type="hidden">
+            <input name="tbname" value="news" type="hidden">
+            <input name="Submit" class="input_submit" value="搜索" type="submit">
+          </form>
+        </div>
+        <div class="fenlei">
+          <h2>文章分类</h2>
+          <ul>
+              {% for foo in category %}
+                <li><a href="{% url 'web:category_list' foo.id %}">{{ foo.name }}</a></li>
+              {% endfor %}
+          </ul>
+        </div>
+         <div class="tuijian">
+          <h2>点击排行</h2>
+          <ul>
+            <li><a href="/">你是什么人便会遇上什么人</a></li>
+            <li><a href="/">帝国cms 列表页调用子栏目，没有则不显示栏目名称</a></li>
+            <li><a href="/">第二届 优秀个人博客模板比赛参选活动</a></li>
+            <li><a href="/">个人博客模板《绅士》后台管理</a></li>
+            <li><a href="/">你是什么人便会遇上什么人</a></li>
+            <li><a href="/">帝国cms 列表页调用子栏目，没有则不显示栏目名称</a></li>
+            <li><a href="/">第二届 优秀个人博客模板比赛参选活动</a></li>
+            <li><a href="/">个人博客模板《绅士》后台管理</a></li>
+          </ul>
+        </div>
+    <div class="cloud">
+          <h2>标签云</h2>
+          <ul>
+            <a href="/">陌上花开</a> <a href="/">校园生活</a> <a href="/">html5</a> <a href="/">SumSung</a> <a href="/">青春</a> <a href="/">温暖</a> <a href="/">阳光</a> <a href="/">三星</a><a href="/">索尼</a> <a href="/">华维荣耀</a> <a href="/">三星</a> <a href="/">索尼</a>
+          </ul>
+        </div>
+        <div class="guanzhu">
+          <h2>关注我 么么哒</h2>
+          <ul>
+            <img src="/static/web/images/wx.jpg">
+          </ul>
+        </div>
+      </aside>
+      <main class="r_box">
+          {% for art in page %}
+                <li><i><a href="{% url 'web:info' art.id %}"><img src="/media/{{ art.icon }}"></a></i>
+                  <h3><a href="{% url 'web:info' art.id %}">{{ art.title }}</a></h3>
+                  <p>{{ art.desc }}</p>
+                </li>
+          {% endfor %}
+
+        <div class="pagelist">
+                {% if page.has_previous %}
+                    <a href="{% url 'web:list' %}?page={{ page.previous_page_number }}" class="allpage"><b>上一页</b></a>
+                {% else %}
+                    <a class="disabled"><b>上一页</b></a>
+                {% endif %}
+                {% for i in page.paginator.page_range %}
+                    {% ifequal page.number i %}
+                        <a href="{% url 'web:list' %}?page={{ i }}" class="curPage">{{ i }}</a>&nbsp;
+                    {% else %}
+                        <a href="{% url 'web:list' %}?page={{ i }}">{{ i }}</a>&nbsp;
+                    {% endifequal %}
+                {% endfor %}
+                {% if page.has_next %}
+                    <a href="% url 'web:list' %}?page={{ page.next_page_number }}" class="allpage"><b>下一页</b></a>
+                 {% else %}
+                    <a class="disabled"><b>下一页</b></a>
+                {% endif %}
+        </div>
+
+      </main>
+    </article>
+{% endblock %}
+
+{% block content_foot %}
+<footer>
+  <p>Design by <a href="{% url 'web:index' %}" target="_blank">JackHao个人博客</a> <a href="/"></p>
+</footer>
+<a href="#" class="cd-top">Top</a>
+{% endblock %}
+
+
+
